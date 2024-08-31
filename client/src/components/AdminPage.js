@@ -58,6 +58,7 @@ const AdminPage = () => {
         }
       });
   }, [navigate]);
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove the token from local storage
@@ -76,6 +77,7 @@ const AdminPage = () => {
         formData,
         {
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }
