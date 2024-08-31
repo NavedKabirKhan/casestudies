@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Ensure you have appropriate styling
 import logo from './logo.svg'; // Import the logo image
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+
 const loginEndpoint = `${process.env.REACT_APP_API_BASE_URL}/login`;
 
 const LoginPage = () => {
@@ -13,13 +16,12 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post(loginEndpoint, { username, password });
       if (response.data.success) {
         localStorage.setItem('token', response.data.token); // Store the token in local storage
-        // Trigger a manual navigation after the token is set
-        window.location.href = '/admin';
+        window.location.href = '/admin'; // Trigger a manual navigation after the token is set
       } else {
         setError('Invalid username or password'); // Show error message
       }
@@ -39,7 +41,7 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleLogin}>
-        <img src={logo} alt="" />
+        <img src={logo} alt="Logo" />
         <h2>Case Studies Login</h2>
         <div className="form-group">
           <label htmlFor="username">Username:</label>
@@ -63,7 +65,6 @@ const LoginPage = () => {
         </div>
         <button type="submit">Login</button>
         {error && <p className="error">{error}</p>} {/* Display error message */}
-
       </form>
     </div>
   );

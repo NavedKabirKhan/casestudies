@@ -4,6 +4,8 @@ import './HomePage.css'; // Import the CSS module
 import workStyles from '../css/Work.module.css';
 import '../css/global.min.css';
 import { Link } from 'react-router-dom';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -12,7 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('${API_BASE_URL}/posts');
+        const response = await axios.get(`${API_BASE_URL}/posts`);
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
@@ -32,7 +34,7 @@ const HomePage = () => {
       <Link to={`/posts/${post.slug}`}>
         <div className={`${workStyles.imageContainerSingle} textAnim`}>
           <img
-            src={`https://casestudies.onrender.com/uploads/thumbnails/${post.thumbnail}`}
+            src={`${process.env.REACT_APP_API_BASE_URL}/uploads/thumbnails/${post.thumbnail}`}
             alt={post.title}
             className={`${workStyles.thumbnailImage} animTxt ${isWide ? workStyles.landscapesRatio : 'squareRatio'}`}
           />

@@ -10,6 +10,34 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const AdminPage = () => {
   const navigate = useNavigate();
+  const [caseStudies, setCaseStudies] = useState([]);
+  const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
+  const [subtitle, setSubtitle] = useState("");
+  const [overviewTitle, setOverviewTitle] = useState(""); // New state for overview title
+  const [overviewContent, setOverviewContent] = useState(""); // Renamed to clarify it's the content
+  const [sections, setSections] = useState([]);
+  const [thumbnail, setThumbnail] = useState(null);
+  const [heroImage, setHeroImage] = useState(null); // State to store the hero image file
+  const [category, setCategory] = useState("");
+  const [type, setType] = useState("");
+
+  // Categories and types options
+  const categories = [
+    "Strategy",
+    "Web Design",
+    "Branding",
+    "Tech",
+    "Marketing",
+  ];
+  const types = [
+    "Hospitality",
+    "Education",
+    "Lifestyle",
+    "Sports",
+    "Architecture",
+  ];
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -35,56 +63,6 @@ const AdminPage = () => {
     localStorage.removeItem("token"); // Remove the token from local storage
     navigate("/login"); // Redirect to the login page
   };
-
-  const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
-  const [subtitle, setSubtitle] = useState("");
-  const [overviewTitle, setOverviewTitle] = useState(""); // New state for overview title
-  const [overviewContent, setOverviewContent] = useState(""); // Renamed to clarify it's the content
-  const [sections, setSections] = useState([]);
-  const [thumbnail, setThumbnail] = useState(null);
-  const [heroImage, setHeroImage] = useState(null); // State to store the hero image file
-  const [category, setCategory] = useState("");
-  const [type, setType] = useState("");
-  const [caseStudies, setCaseStudies] = useState([]);
-
-  // Categories and types options
-  const categories = [
-    "Strategy",
-    "Web Design",
-    "Branding",
-    "Tech",
-    "Marketing",
-  ];
-  const types = [
-    "Hospitality",
-    "Education",
-    "Lifestyle",
-    "Sports",
-    "Architecture",
-  ];
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login"); // Redirect to login if not authenticated
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    const fetchCaseStudies = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/posts`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setCaseStudies(response.data);
-      } catch (error) {
-        console.error("Error fetching case studies:", error.message);
-      }
-    };
-
-    fetchCaseStudies();
-  }, []);
 
   // Function to handle thumbnail upload (for homepage)
   const handleThumbnailUpload = async (e) => {
@@ -192,8 +170,8 @@ const AdminPage = () => {
       title,
       slug,
       subtitle,
-      overviewTitle, // Add this
-      overviewContent, // Add this
+      overviewTitle,
+      overviewContent,
       thumbnail,
       heroImage,
       category,
@@ -207,17 +185,15 @@ const AdminPage = () => {
       setTitle("");
       setSlug("");
       setSubtitle("");
-      setOverviewTitle(""); // Reset the overview title field
-      setOverviewContent(""); // Reset the overview content field
+      setOverviewTitle("");
+      setOverviewContent("");
       setThumbnail(null);
-      setHeroImage(null); // Reset the hero image field
+      setHeroImage(null);
       setCategory("");
       setType("");
       setSections([]);
       // Refetch case studies to include the new one
-      const response = await axios.get(
-        `${API_BASE_URL}/posts`
-      );
+      const response = await axios.get(`${API_BASE_URL}/posts`);
       setCaseStudies(response.data);
     } catch (error) {
       console.error("Error creating case study:", error.message);
@@ -288,14 +264,14 @@ const AdminPage = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M4 4H13V9H11.5V5.5H5.5V18.5H11.5V15H13V20H4V4Z"
               fill="#1F2328"
             />
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M17.1332 11.25L15.3578 9.47463L16.4184 8.41397L20.0045 12L16.4184 15.586L15.3578 14.5254L17.1332 12.75H9V11.25H17.1332Z"
               fill="#1F2328"
             />
@@ -358,7 +334,7 @@ const AdminPage = () => {
               />
               {thumbnail && (
                 <img
-                  src={`https://casestudies.onrender.com/uploads/thumbnails/${thumbnail}`}
+                  src={`${API_BASE_URL}/uploads/thumbnails/${thumbnail}`}
                   alt="Thumbnail preview"
                   style={{ width: "100%", maxWidth: "100%", marginTop: "10px" }}
                 />
@@ -376,7 +352,7 @@ const AdminPage = () => {
               />
               {heroImage && (
                 <img
-                  src={`https://casestudies.onrender.com/uploads/heroImages/${heroImage}`}
+                  src={`${API_BASE_URL}/uploads/heroImages/${heroImage}`}
                   alt="Hero preview"
                   style={{ width: "100%", maxWidth: "100%", marginTop: "10px" }}
                 />
@@ -504,7 +480,7 @@ const AdminPage = () => {
                   />
                   {section.images[0] && (
                     <img
-                      src={`https://casestudies.onrender.com/uploads/${section.images[0]}`}
+                      src={`${API_BASE_URL}/uploads/${section.images[0]}`}
                       alt="preview"
                       style={{ width: "100%", maxWidth: "100%" }}
                     />
@@ -520,7 +496,7 @@ const AdminPage = () => {
                   {section.images.map((img, imgIndex) => (
                     <img
                       key={imgIndex}
-                      src={`https://casestudies.onrender.com/uploads/${img}`}
+                      src={`${API_BASE_URL}/uploads/${img}`}
                       alt="preview"
                       style={{ width: "100%", maxWidth: "calc(50% - 5px)" }}
                     />
@@ -556,7 +532,7 @@ const AdminPage = () => {
                     >
                       <div>{post.title}</div>
                       <img
-                        src={`https://casestudies.onrender.com/uploads/thumbnails/${post.thumbnail}`}
+                        src={`${API_BASE_URL}/uploads/thumbnails/${post.thumbnail}`}
                         alt={post.title}
                         style={{ width: "100px", height: "auto" }}
                       />

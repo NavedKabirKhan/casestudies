@@ -6,27 +6,20 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected successfully'))
-.catch(err => console.error('MongoDB connection error:', err));
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -40,8 +33,8 @@ const User = mongoose.model('User', userSchema);
 const blogPostSchema = new mongoose.Schema({
   title: { type: String, required: true },
   subtitle: { type: String },
-  overviewTitle: { type: String }, // New field for Project Overview Title
-  overviewContent: { type: String }, // New field for Project Overview Content
+  overviewTitle: { type: String },
+  overviewContent: { type: String },
   sections: [
     {
       type: { type: String, required: true },
@@ -104,6 +97,10 @@ const uploadThumbnail = multer({ storage: thumbnailStorage });
 const uploadHeroImage = multer({ storage: heroImageStorage });
 const upload = multer({ storage: genericStorage });
 
+app.get('/api', (req, res) => {
+  res.send('API is working!');
+});
+
 app.post('/api/upload/thumbnail', authenticateToken, uploadThumbnail.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No thumbnail uploaded' });
@@ -111,7 +108,6 @@ app.post('/api/upload/thumbnail', authenticateToken, uploadThumbnail.single('ima
   res.json({ filename: req.file.filename });
 });
 
-// Upload a hero image
 app.post('/api/upload/hero', authenticateToken, uploadHeroImage.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No hero image uploaded' });
@@ -119,7 +115,6 @@ app.post('/api/upload/hero', authenticateToken, uploadHeroImage.single('image'),
   res.json({ filename: req.file.filename });
 });
 
-// Upload an image for case study content
 app.post('/api/upload', authenticateToken, upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No image uploaded' });
@@ -127,7 +122,6 @@ app.post('/api/upload', authenticateToken, upload.single('image'), (req, res) =>
   res.json({ filename: req.file.filename });
 });
 
-// Create a new blog post
 app.post('/api/posts', authenticateToken, async (req, res) => {
   try {
     const newPost = new BlogPost(req.body);
@@ -139,7 +133,6 @@ app.post('/api/posts', authenticateToken, async (req, res) => {
   }
 });
 
-// Get a blog post by slug
 app.get('/api/posts/:slug', async (req, res) => {
   try {
     const post = await BlogPost.findOne({ slug: req.params.slug });
@@ -150,7 +143,8 @@ app.get('/api/posts/:slug', async (req, res) => {
   }
 });
 
-// Get all blog posts
+
+
 app.get('/api/posts', async (req, res) => {
   try {
     const posts = await BlogPost.find().sort({ createdAt: -1 });
@@ -160,7 +154,15 @@ app.get('/api/posts', async (req, res) => {
   }
 });
 
-// Reorder blog posts
+app.get('/api/users', authenticateToken, async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 app.post('/api/posts/reorder', authenticateToken, async (req, res) => {
   const { caseStudies } = req.body;
   try {
@@ -173,7 +175,6 @@ app.post('/api/posts/reorder', authenticateToken, async (req, res) => {
   }
 });
 
-// Delete a blog post
 app.delete('/api/posts/:id', authenticateToken, async (req, res) => {
   try {
     const deletedPost = await BlogPost.findByIdAndDelete(req.params.id);
