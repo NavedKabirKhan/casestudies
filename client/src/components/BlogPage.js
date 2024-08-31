@@ -11,7 +11,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/posts/${slug}`);
+        const response = await axios.get(`https://casestudies.onrender.com/api/posts/${slug}`);
         setPost(response.data);
         setLoading(false);
       } catch (error) {
@@ -33,7 +33,7 @@ const BlogPage = () => {
         className="case_Study_hero_container" 
         style={{ 
           backgroundImage: post.heroImage 
-            ? `url(http://localhost:5000/uploads/heroImages/${post.heroImage})` 
+            ? `url(https://casestudies.onrender.com/uploads/heroImages/${post.heroImage})` 
             : 'none'
         }}
       >
@@ -71,7 +71,7 @@ const BlogPage = () => {
             {section.type === 'text' && <p>{section.content}</p>}
             {section.type === 'singleImage' && (
               <img
-                src={`http://localhost:5000/uploads/${section.images[0]}`}
+                src={`https://casestudies.onrender.com/uploads/${section.images[0]}`}
                 alt="blog"
                 className="image-content"
               />
@@ -81,7 +81,7 @@ const BlogPage = () => {
                 {section.images.map((img, imgIndex) => (
                   <img
                     key={imgIndex}
-                    src={`http://localhost:5000/uploads/${img}`}
+                    src={`https://casestudies.onrender.com/uploads/${img}`}
                     alt="blog"
                     className="image-content"
                   />

@@ -12,7 +12,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/posts');
+        const response = await axios.get('https://casestudies.onrender.com/api/posts');
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
@@ -32,7 +32,7 @@ const HomePage = () => {
       <Link to={`/posts/${post.slug}`}>
         <div className={`${workStyles.imageContainerSingle} textAnim`}>
           <img
-            src={`http://localhost:5000/uploads/thumbnails/${post.thumbnail}`}
+            src={`https://casestudies.onrender.com/uploads/thumbnails/${post.thumbnail}`}
             alt={post.title}
             className={`${workStyles.thumbnailImage} animTxt ${isWide ? workStyles.landscapesRatio : 'squareRatio'}`}
           />

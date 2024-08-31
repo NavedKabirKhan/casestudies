@@ -16,7 +16,7 @@ const AdminPage = () => {
     }
 
     axios
-      .get("http://localhost:5000/api/posts", {
+      .get("https://casestudies.onrender.com/api/posts", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => setCaseStudies(response.data))
@@ -72,7 +72,7 @@ const AdminPage = () => {
   useEffect(() => {
     const fetchCaseStudies = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/posts");
+        const response = await axios.get("https://casestudies.onrender.com/api/posts");
         setCaseStudies(response.data);
       } catch (error) {
         console.error("Error fetching case studies:", error.message);
@@ -90,7 +90,7 @@ const AdminPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/upload/thumbnail",
+        "https://casestudies.onrender.com/api/upload/thumbnail",
         formData,
         {
           headers: {
@@ -112,7 +112,7 @@ const AdminPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/upload/hero",
+        "https://casestudies.onrender.com/api/upload/hero",
         formData,
         {
           headers: {
@@ -147,7 +147,7 @@ const AdminPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/upload",
+        "https://casestudies.onrender.com/api/upload",
         formData,
         {
           headers: {
@@ -198,7 +198,7 @@ const AdminPage = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/api/posts", newPost);
+      await axios.post("https://casestudies.onrender.com/api/posts", newPost);
       alert("Case study created successfully!");
       setTitle("");
       setSlug("");
@@ -211,7 +211,7 @@ const AdminPage = () => {
       setType("");
       setSections([]);
       // Refetch case studies to include the new one
-      const response = await axios.get("http://localhost:5000/api/posts");
+      const response = await axios.get("https://casestudies.onrender.com/api/posts");
       setCaseStudies(response.data);
     } catch (error) {
       console.error("Error creating case study:", error.message);
@@ -233,7 +233,7 @@ const AdminPage = () => {
 
     // Save the new order to the server
     try {
-      await axios.post("http://localhost:5000/api/posts/reorder", {
+      await axios.post("https://casestudies.onrender.com/api/posts/reorder", {
         caseStudies: reorderedCaseStudies,
       });
     } catch (error) {
@@ -249,7 +249,7 @@ const AdminPage = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/posts/${id}`);
+      await axios.delete(`https://casestudies.onrender.com/api/posts/${id}`);
       setCaseStudies(caseStudies.filter((caseStudy) => caseStudy._id !== id));
       alert("Case study deleted successfully!");
     } catch (error) {
@@ -336,7 +336,7 @@ const AdminPage = () => {
               />
               {thumbnail && (
                 <img
-                  src={`http://localhost:5000/uploads/thumbnails/${thumbnail}`}
+                  src={`https://casestudies.onrender.com/uploads/thumbnails/${thumbnail}`}
                   alt="Thumbnail preview"
                   style={{ width: "100%", maxWidth: "100%", marginTop: "10px" }}
                 />
@@ -354,7 +354,7 @@ const AdminPage = () => {
               />
               {heroImage && (
                 <img
-                  src={`http://localhost:5000/uploads/heroImages/${heroImage}`}
+                  src={`https://casestudies.onrender.com/uploads/heroImages/${heroImage}`}
                   alt="Hero preview"
                   style={{ width: "100%", maxWidth: "100%", marginTop: "10px" }}
                 />
@@ -482,7 +482,7 @@ const AdminPage = () => {
                   />
                   {section.images[0] && (
                     <img
-                      src={`http://localhost:5000/uploads/${section.images[0]}`}
+                      src={`https://casestudies.onrender.com/uploads/${section.images[0]}`}
                       alt="preview"
                       style={{ width: "100%", maxWidth: "100%" }}
                     />
@@ -498,7 +498,7 @@ const AdminPage = () => {
                   {section.images.map((img, imgIndex) => (
                     <img
                       key={imgIndex}
-                      src={`http://localhost:5000/uploads/${img}`}
+                      src={`https://casestudies.onrender.com/uploads/${img}`}
                       alt="preview"
                       style={{ width: "100%", maxWidth: "calc(50% - 5px)" }}
                     />
@@ -534,7 +534,7 @@ const AdminPage = () => {
                     >
                       <div>{post.title}</div>
                       <img
-                        src={`http://localhost:5000/uploads/thumbnails/${post.thumbnail}`}
+                        src={`https://casestudies.onrender.com/uploads/thumbnails/${post.thumbnail}`}
                         alt={post.title}
                         style={{ width: "100px", height: "auto" }}
                       />
