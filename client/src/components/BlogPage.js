@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './BlogPage.css';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 
 const BlogPage = () => {
   const { slug } = useParams();
@@ -11,7 +13,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`https://casestudies.onrender.com/api/posts/${slug}`);
+        const response = await axios.get(`${API_BASE_URL}/posts/${slug}`);
         setPost(response.data);
         setLoading(false);
       } catch (error) {

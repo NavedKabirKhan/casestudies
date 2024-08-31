@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Ensure you have appropriate styling
 import logo from './logo.svg'; // Import the logo image
+const loginEndpoint = `${process.env.REACT_APP_API_BASE_URL}/login`;
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -14,7 +15,7 @@ const LoginPage = () => {
     e.preventDefault();
   
     try {
-      const response = await axios.post('https://casestudies.onrender.com/api/login', { username, password });
+      const response = await axios.post(loginEndpoint, { username, password });
       if (response.data.success) {
         localStorage.setItem('token', response.data.token); // Store the token in local storage
         // Trigger a manual navigation after the token is set

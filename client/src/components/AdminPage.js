@@ -6,6 +6,8 @@ import logo from "./logo.svg"; // Import the logo image
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "./AdminPage.css"; // Import the CSS module
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const AdminPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -16,7 +18,7 @@ const AdminPage = () => {
     }
 
     axios
-      .get("https://casestudies.onrender.com/api/posts", {
+      .get(`${API_BASE_URL}/posts`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => setCaseStudies(response.data))
@@ -72,7 +74,9 @@ const AdminPage = () => {
   useEffect(() => {
     const fetchCaseStudies = async () => {
       try {
-        const response = await axios.get("https://casestudies.onrender.com/api/posts");
+        const response = await axios.get(`${API_BASE_URL}/posts`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setCaseStudies(response.data);
       } catch (error) {
         console.error("Error fetching case studies:", error.message);
@@ -90,7 +94,7 @@ const AdminPage = () => {
 
     try {
       const response = await axios.post(
-        "https://casestudies.onrender.com/api/upload/thumbnail",
+        `${API_BASE_URL}/upload/thumbnail`,
         formData,
         {
           headers: {
@@ -112,7 +116,7 @@ const AdminPage = () => {
 
     try {
       const response = await axios.post(
-        "https://casestudies.onrender.com/api/upload/hero",
+        `${API_BASE_URL}/upload/hero`,
         formData,
         {
           headers: {
@@ -147,7 +151,7 @@ const AdminPage = () => {
 
     try {
       const response = await axios.post(
-        "https://casestudies.onrender.com/api/upload",
+        `${API_BASE_URL}/upload`,
         formData,
         {
           headers: {
@@ -198,7 +202,7 @@ const AdminPage = () => {
     };
 
     try {
-      await axios.post("https://casestudies.onrender.com/api/posts", newPost);
+      await axios.post(`${API_BASE_URL}/posts`, newPost);
       alert("Case study created successfully!");
       setTitle("");
       setSlug("");
@@ -211,7 +215,9 @@ const AdminPage = () => {
       setType("");
       setSections([]);
       // Refetch case studies to include the new one
-      const response = await axios.get("https://casestudies.onrender.com/api/posts");
+      const response = await axios.get(
+        `${API_BASE_URL}/posts`
+      );
       setCaseStudies(response.data);
     } catch (error) {
       console.error("Error creating case study:", error.message);
@@ -233,7 +239,7 @@ const AdminPage = () => {
 
     // Save the new order to the server
     try {
-      await axios.post("https://casestudies.onrender.com/api/posts/reorder", {
+      await axios.post(`${API_BASE_URL}/posts/reorder`, {
         caseStudies: reorderedCaseStudies,
       });
     } catch (error) {
@@ -249,7 +255,7 @@ const AdminPage = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`https://casestudies.onrender.com/api/posts/${id}`);
+      await axios.delete(`${API_BASE_URL}/posts/${id}`);
       setCaseStudies(caseStudies.filter((caseStudy) => caseStudy._id !== id));
       alert("Case study deleted successfully!");
     } catch (error) {
@@ -265,7 +271,8 @@ const AdminPage = () => {
       <header>
         <img src={logo} alt="" className="logo" />
         <h1 className="heading">Create Case Study</h1>
-        <button className="logout-btn"
+        <button
+          className="logout-btn"
           onClick={handleLogout}
           style={{
             backgroundColor: "red",
@@ -274,10 +281,25 @@ const AdminPage = () => {
             cursor: "pointer",
           }}
         >
-<svg width="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M4 4H13V9H11.5V5.5H5.5V18.5H11.5V15H13V20H4V4Z" fill="#1F2328"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M17.1332 11.25L15.3578 9.47463L16.4184 8.41397L20.0045 12L16.4184 15.586L15.3578 14.5254L17.1332 12.75H9V11.25H17.1332Z" fill="#1F2328"/>
-</svg>
+          <svg
+            width="30px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M4 4H13V9H11.5V5.5H5.5V18.5H11.5V15H13V20H4V4Z"
+              fill="#1F2328"
+            />
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M17.1332 11.25L15.3578 9.47463L16.4184 8.41397L20.0045 12L16.4184 15.586L15.3578 14.5254L17.1332 12.75H9V11.25H17.1332Z"
+              fill="#1F2328"
+            />
+          </svg>
           Logout
         </button>
       </header>
