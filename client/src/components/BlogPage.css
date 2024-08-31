@@ -1,0 +1,215 @@
+body{
+  background-color: #f8f8f8 !important; 
+}
+.case_Study_hero_container {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 100vw;
+    aspect-ratio: 1920 / 1750;
+    background-color: #101820;
+  }
+  
+  .Case_Study_hero_text {
+    text-align: center;
+  }
+  
+  .Project_Overview_container {
+    padding: 10px 0;
+  }
+  
+  .Project_Overview_heading {
+    margin-bottom: 30px;
+  }
+  
+  .Project_Overview_Discovering {
+    margin: 0 auto;
+  }
+  
+  .Project_Overview_Right_bottom {
+    margin-top: 30px;
+  }
+  
+  .selectedTrans {
+    color: #333;
+  }
+  
+  .headTrans {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  #circular_text {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+  .case_Study_hero_container {
+    width: 100vw;
+    aspect-ratio: 1920/1750;
+    background-color: #101820;
+    position: relative;
+}
+
+.Case_Stydy_hero_text {
+    font-family: ideamet;
+    font-weight: 500;
+    color: #fff;
+    position: absolute;
+    width: 56%;
+    top: calc(10vw + 1px);
+    left: 115px;
+    transition: top .5s ease;
+}
+
+.Case_Stydy_hero_text h2 {
+    font-size: var(--fs-36);
+    font-weight: 500;
+    width: 95%;
+    overflow: hidden;
+    
+}
+
+.Case_Stydy_hero_text h1 {
+    font-size: var(--fs-164);
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-top: 30px;
+    overflow: hidden;
+    
+}
+
+@media screen and (max-width:980px) {
+    .Case_Stydy_hero_text h1 {
+        width: 120%;
+    }
+}
+
+.challange_move {
+    width: 216.51px;
+    aspect-ratio: 1/1;
+    position: absolute;
+    bottom: 5vw;
+    right: 5vw;
+    transition: transform .5s linear;
+}
+
+.challange_move img {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (min-width:320px) and (max-width:960px) {
+    .case_Study_hero_container {
+        width: 100vw;
+        aspect-ratio: 393/852;
+    }
+}
+
+@media screen and (min-width:640px) and (max-width:1200px) {
+    .Case_Stydy_hero_text {
+        width: 50%;
+        top: 20vw;
+        left: 60px;
+    }
+
+    .challange_move {
+        width: 116.51px;
+    }
+}
+
+@media screen and (min-width:320px) and (max-width:640px) {
+    .Case_Stydy_hero_text {
+        width: 70%;
+        margin-top: 50px;
+        top: 20vw;
+        left: 20px;
+    }
+
+    .challange_move {
+        width: 116.51px;
+    }
+}
+
+.Project_Overview_container {
+    padding: 300px 115px;
+    display: flex;
+    justify-content: space-between;
+    font-family: ideamet;
+    font-weight: 500;
+}
+
+.Project_Overview_heding {
+    width: 25%;
+}
+
+.Project_Overview_heding h2 {
+    font-size: 36px;
+    margin-bottom: 50px;
+    font-weight: 500;
+}
+
+.Project_Overview_Discovering {
+    width: 75%;
+}
+
+.Project_Overview_Discovering>h2 {
+    font-size: 64px;
+    margin-bottom: 80px;
+    font-weight: 500;
+}
+
+.Project_Overview_Category {
+    font-size: 24px;
+    color: grey;
+    margin-top: 2vw;
+}
+
+.Project_Overview_Tech {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.Project_Overview_Discovering>p {
+    font-size: 36px;
+    color: grey;
+    margin-bottom: 5vw;
+}
+
+.case_Study_hero_image_boAt {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media screen and (min-width:320px) and (max-width:960px) {
+    .Project_Overview_container {
+        flex-direction: column;
+    }
+
+    .Project_Overview_heding {
+        width: 100%;
+    }
+
+    .Project_Overview_Discovering {
+        width: 100%;
+    }
+}
+
+.image-container-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.image-content {
+    border-radius: 8px;
+    width: 100%;
+}

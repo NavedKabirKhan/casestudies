@@ -1,0 +1,207 @@
+.workHeaderSection {
+    padding: 180px 115px;
+    font-family: ideamet;
+    padding-bottom: 60px;
+}
+
+.workHeaderContainer {
+    display: flex;
+    width: 100%;
+}
+
+.headerContent {
+    width: 60%;
+}
+
+@media screen and (min-width: 320px) and (max-width: 920px) {
+    .headerContent {
+        width: 100%;
+    }
+}
+
+.workHeaderHeading {
+    font-size: var(--fs-64);
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.1;
+    /* visibility: hidden; */
+    overflow: hidden;
+}
+
+.headingExplainer {
+    padding-top: 50px;
+    width: 60%;
+    font-size: var(--fs-24);
+    color: #646464;
+    overflow: hidden;
+    /* visibility: hidden; */
+}
+
+.workHeaderImageContainer {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (min-width: 320px) and (max-width: 920px) {
+    .workHeaderContainer {
+        flex-direction: column;
+        gap: 60px;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 640px) {
+    .workHeaderSection {
+        padding: 80px 20px;
+        margin-top: 60px;
+    }
+
+    .workHeaderImageContainer img {
+        width: 60%;
+    }
+
+    .headingExplainer {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 640px) and (max-width: 1200px) {
+    .workHeaderSection {
+        padding: 100px 60px;
+    }
+}
+
+.workPageGridSection {
+    padding: 0 115px;
+    font-family: ideamet;
+    display: flex;
+    gap: 90px;
+    flex-direction: column;
+    padding-bottom: 120px;
+}
+
+.caseStudyHeading {
+    font-size: var(--fs-36);
+    font-weight: 500;
+    /* visibility: hidden; */
+}
+
+.singleImageDetailHolder {
+    width: 100%;
+}
+
+.thumbnailImage {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.landscapesRatio {
+    aspect-ratio: 169/65 !important;
+}
+
+/* .squareRatio {
+    aspect-ratio: 1/1 !important;
+} */
+
+.detailsContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+
+.imageContainerSingle {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.doubleImageDetailHolder {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.workHeadingClient {
+    font-size: var(--fs-36);
+    font-weight: 500;
+    color: #101820 !important;
+}
+
+.vertical {
+    font-size: var(--fs-24);
+    font-weight: 500;
+    color: #646464;
+    text-align: right;
+}
+
+.vertical span {
+    color: #101820;
+}
+
+.thumbnailLinks {
+    text-decoration: none !important;
+    width: 100%;
+}
+
+@media screen and (min-width: 320px) and (max-width: 960px) {
+    .detailsContainer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .landscapesRatio {
+        aspect-ratio: 1/1 !important;
+    }
+
+    .doubleImageDetailHolder {
+        flex-direction: column;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 640px) {
+    .workPageGridSection {
+        padding: 0 20px;
+        gap: 56px;
+        padding-bottom: 40px;
+    }
+
+    .detailsContainer {
+        gap: 6px;
+    }
+
+    .imageContainerSingle {
+        gap: 10px;
+    }
+
+    .doubleImageDetailHolder {
+        gap: 56px;
+    }
+}
+
+@media screen and (min-width: 640px) and (max-width: 1200px) {
+    .workPageGridSection {
+        padding: 0 60px;
+        gap: 56px;
+        padding-bottom: 60px;
+    }
+
+    .detailsContainer {
+        gap: 6px;
+    }
+
+    .imageContainerSingle {
+        gap: 10px;
+    }
+
+    .doubleImageDetailHolder {
+        gap: 56px;
+    }
+}

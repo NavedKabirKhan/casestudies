@@ -1,0 +1,34 @@
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns for the grid */
+  gap: 20px;
+  margin: 20px;
+}
+
+.thumbnail, .landscape-thumbnail {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.thumbnail img, .landscape-thumbnail img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.thumbnail {
+  grid-column: span 1;
+}
+
+.landscape-thumbnail {
+  grid-column: span 2; /* Span across both columns */
+}
+
+.thumbnail h2, .landscape-thumbnail h2 {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #333;
+}
