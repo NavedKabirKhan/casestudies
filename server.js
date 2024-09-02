@@ -47,9 +47,7 @@ const blogPostSchema = new mongoose.Schema({
   heroImage: { type: String },
   category: { type: String, required: true },
   type: { type: String, required: true },
-  order: { type: Number, default: 0 },  // Add this line
 }, { timestamps: true });
-
 
 const BlogPost = mongoose.model('BlogPost', blogPostSchema);
 
@@ -149,7 +147,7 @@ app.get('/api/posts/:slug', async (req, res) => {
 
 app.get('/api/posts', async (req, res) => {
   try {
-    const posts = await BlogPost.find().sort({ order: 1 }); // Sorting by the 'order' field
+    const posts = await BlogPost.find().sort({ createdAt: -1 });
     res.json(posts);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -176,7 +174,6 @@ app.post('/api/posts/reorder', authenticateToken, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
 
 app.delete('/api/posts/:id', authenticateToken, async (req, res) => {
   try {
