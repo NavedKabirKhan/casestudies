@@ -34,7 +34,7 @@ const HomePage = () => {
       <Link to={`/posts/${post.slug}`}>
         <div className={`${workStyles.imageContainerSingle} textAnim`}>
           <img
-            src={`${process.env.REACT_APP_API_BASE_URL}/uploads/thumbnails/${post.thumbnail}`}
+            src={`${API_BASE_URL.replace("/api", "")}/uploads/thumbnails/${post.thumbnail}`}
             alt={post.title}
             className={`${workStyles.thumbnailImage} animTxt ${isWide ? workStyles.landscapesRatio : 'squareRatio'}`}
             onError={(e) => {
