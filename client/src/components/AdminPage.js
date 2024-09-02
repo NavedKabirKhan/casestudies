@@ -178,13 +178,13 @@ const AdminPage = () => {
 
   const handleOnDragEnd = async (result) => {
     if (!result.destination) return;
-
+  
     const reorderedCaseStudies = Array.from(caseStudies);
     const [movedCaseStudy] = reorderedCaseStudies.splice(result.source.index, 1);
     reorderedCaseStudies.splice(result.destination.index, 0, movedCaseStudy);
-
+  
     setCaseStudies(reorderedCaseStudies);
-
+  
     try {
       const token = localStorage.getItem("token");
       await axios.post(`${API_BASE_URL}/posts/reorder`, {
@@ -196,6 +196,7 @@ const AdminPage = () => {
       console.error("Error saving reordered case studies:", error.message);
     }
   };
+  
 
   const handleDeleteCaseStudy = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this case study?");
