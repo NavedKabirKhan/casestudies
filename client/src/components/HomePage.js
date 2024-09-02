@@ -39,7 +39,6 @@ const HomePage = () => {
             className={`${workStyles.thumbnailImage} animTxt ${isWide ? workStyles.landscapesRatio : 'squareRatio'}`}
             onError={(e) => {
               console.error('Error loading image:', e.target.src);
-              e.target.src = '/path/to/placeholder/image.png'; // Optional: fallback image
             }}
           />
           <div className={workStyles.detailsContainer}>
