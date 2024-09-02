@@ -11,6 +11,8 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const AdminPage = () => {
   const navigate = useNavigate();
   const [caseStudies, setCaseStudies] = useState([]);
+  const [orderChanged, setOrderChanged] = useState(false); // Track if order has been changed
+
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -41,7 +43,7 @@ const AdminPage = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/login"); // Redirect to login if no token found
+      navigate("/login");
       return;
     }
 
@@ -58,6 +60,7 @@ const AdminPage = () => {
         }
       });
   }, [navigate]);
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove the token from local storage
@@ -201,27 +204,35 @@ const AdminPage = () => {
   };
 
   // Function to handle the reordering of case studies
-  const handleOnDragEnd = async (result) => {
+  const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
     const reorderedCaseStudies = Array.from(caseStudies);
-    const [movedCaseStudy] = reorderedCaseStudies.splice(
-      result.source.index,
-      1
-    );
+    const [movedCaseStudy] = reorderedCaseStudies.splice(result.source.index, 1);
     reorderedCaseStudies.splice(result.destination.index, 0, movedCaseStudy);
 
     setCaseStudies(reorderedCaseStudies);
+    setOrderChanged(true); // Enable the confirmation button
+  };
+  
 
     // Save the new order to the server
-    try {
-      await axios.post(`${API_BASE_URL}/posts/reorder`, {
-        caseStudies: reorderedCaseStudies,
-      });
-    } catch (error) {
-      console.error("Error saving reordered case studies:", error.message);
-    }
-  };
+    const handleConfirmOrder = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        await axios.post(`${API_BASE_URL}/posts/reorder`, {
+          caseStudies,
+        }, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+  
+        alert("Order confirmed and saved successfully!");
+        setOrderChanged(false); // Disable the confirmation button
+      } catch (error) {
+        console.error("Error saving reordered case studies:", error.message);
+      }
+    };
+  
 
   // Function to handle case study deletion with confirmation
   const handleDeleteCaseStudy = async (id) => {
@@ -571,6 +582,20 @@ const AdminPage = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <button
+        onClick={handleConfirmOrder}
+        disabled={!orderChanged}
+        className="confirm-order-btn"
+        style={{
+          backgroundColor: orderChanged ? "green" : "gray",
+          color: "white",
+          padding: "10px 20px",
+          cursor: orderChanged ? "pointer" : "not-allowed",
+          marginTop: "20px",
+        }}
+      >
+        Confirm Order
+      </button>
     </div>
   );
 };
