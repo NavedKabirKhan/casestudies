@@ -66,50 +66,54 @@ const AdminPage = () => {
   };
 
   // Function to handle thumbnail upload (for homepage)
-  const handleThumbnailUpload = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
+const handleThumbnailUpload = async (e) => {
+  const file = e.target.files[0];
+  const formData = new FormData();
+  formData.append("image", file);
 
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}/upload/thumbnail`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setThumbnail(response.data.filename); // Set the uploaded thumbnail filename
-    } catch (error) {
-      console.error("Error uploading thumbnail:", error.message);
-    }
-  };
+  try {
+    const token = localStorage.getItem("token"); // Retrieve the token here
+    const response = await axios.post(
+      `${API_BASE_URL}/upload/thumbnail`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    setThumbnail(response.data.filename); // Set the uploaded thumbnail filename
+  } catch (error) {
+    console.error("Error uploading thumbnail:", error.message);
+  }
+};
+
 
   // Function to handle hero image upload (for internal page)
-  const handleHeroImageUpload = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
+const handleHeroImageUpload = async (e) => {
+  const file = e.target.files[0];
+  const formData = new FormData();
+  formData.append("image", file);
 
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}/upload/hero`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setHeroImage(response.data.filename); // Set the uploaded hero image filename
-      console.log("Uploaded Hero Image:", response.data.filename); // Log the uploaded filename
-    } catch (error) {
-      console.error("Error uploading hero image:", error.message);
-    }
-  };
+  try {
+    const token = localStorage.getItem("token"); // Retrieve the token here
+    const response = await axios.post(
+      `${API_BASE_URL}/upload/hero`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    setHeroImage(response.data.filename); // Set the uploaded hero image filename
+    console.log("Uploaded Hero Image:", response.data.filename); // Log the uploaded filename
+  } catch (error) {
+    console.error("Error uploading hero image:", error.message);
+  }
+};
 
   // Function to add a new section with a specific type
   const addSection = (sectionType) => {
