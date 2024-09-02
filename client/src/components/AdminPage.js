@@ -58,7 +58,6 @@ const AdminPage = () => {
         }
       });
   }, [navigate]);
-  
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove the token from local storage
@@ -66,54 +65,53 @@ const AdminPage = () => {
   };
 
   // Function to handle thumbnail upload (for homepage)
-const handleThumbnailUpload = async (e) => {
-  const file = e.target.files[0];
-  const formData = new FormData();
-  formData.append("image", file);
+  const handleThumbnailUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
 
-  try {
-    const token = localStorage.getItem("token"); // Retrieve the token here
-    const response = await axios.post(
-      `${API_BASE_URL}/upload/thumbnail`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    setThumbnail(response.data.filename); // Set the uploaded thumbnail filename
-  } catch (error) {
-    console.error("Error uploading thumbnail:", error.message);
-  }
-};
-
+    try {
+      const token = localStorage.getItem("token"); // Retrieve the token here
+      const response = await axios.post(
+        `${API_BASE_URL}/upload/thumbnail`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setThumbnail(response.data.filename); // Set the uploaded thumbnail filename
+    } catch (error) {
+      console.error("Error uploading thumbnail:", error.message);
+    }
+  };
 
   // Function to handle hero image upload (for internal page)
-const handleHeroImageUpload = async (e) => {
-  const file = e.target.files[0];
-  const formData = new FormData();
-  formData.append("image", file);
+  const handleHeroImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
 
-  try {
-    const token = localStorage.getItem("token"); // Retrieve the token here
-    const response = await axios.post(
-      `${API_BASE_URL}/upload/hero`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    setHeroImage(response.data.filename); // Set the uploaded hero image filename
-    console.log("Uploaded Hero Image:", response.data.filename); // Log the uploaded filename
-  } catch (error) {
-    console.error("Error uploading hero image:", error.message);
-  }
-};
+    try {
+      const token = localStorage.getItem("token"); // Retrieve the token here
+      const response = await axios.post(
+        `${API_BASE_URL}/upload/hero`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setHeroImage(response.data.filename); // Set the uploaded hero image filename
+      console.log("Uploaded Hero Image:", response.data.filename); // Log the uploaded filename
+    } catch (error) {
+      console.error("Error uploading hero image:", error.message);
+    }
+  };
 
   // Function to add a new section with a specific type
   const addSection = (sectionType) => {
@@ -134,15 +132,11 @@ const handleHeroImageUpload = async (e) => {
     formData.append("image", file);
 
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/upload`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       const newSections = [...sections];
       if (isSingleImage) {
@@ -340,7 +334,10 @@ const handleHeroImageUpload = async (e) => {
               />
               {thumbnail && (
                 <img
-                  src={`${API_BASE_URL}/uploads/thumbnails/${thumbnail}`}
+                  src={`${API_BASE_URL.replace(
+                    "/api",
+                    ""
+                  )}/uploads/thumbnails/${thumbnail}`}
                   alt="Thumbnail preview"
                   style={{ width: "100%", maxWidth: "100%", marginTop: "10px" }}
                 />
@@ -358,7 +355,10 @@ const handleHeroImageUpload = async (e) => {
               />
               {heroImage && (
                 <img
-                  src={`${API_BASE_URL}/uploads/heroImages/${heroImage}`}
+                  src={`${API_BASE_URL.replace(
+                    "/api",
+                    ""
+                  )}/uploads/heroImages/${heroImage}`}
                   alt="Hero preview"
                   style={{ width: "100%", maxWidth: "100%", marginTop: "10px" }}
                 />
