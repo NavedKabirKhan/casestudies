@@ -37,6 +37,10 @@ const HomePage = () => {
             src={`${process.env.REACT_APP_API_BASE_URL}/uploads/thumbnails/${post.thumbnail}`}
             alt={post.title}
             className={`${workStyles.thumbnailImage} animTxt ${isWide ? workStyles.landscapesRatio : 'squareRatio'}`}
+            onError={(e) => {
+              console.error('Error loading image:', e.target.src);
+              e.target.src = '/path/to/placeholder/image.png'; // Optional: fallback image
+            }}
           />
           <div className={workStyles.detailsContainer}>
             <h3 className={workStyles.workHeadingClient}>{post.title}</h3>
@@ -48,6 +52,7 @@ const HomePage = () => {
       </Link>
     </div>
   );
+  
 
   const renderPosts = () => {
     const postElements = [];
