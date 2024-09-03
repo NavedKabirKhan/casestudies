@@ -231,4 +231,13 @@
   .delete-button:hover {
     background-color: #d32f2f;
   }
-  
+  .confirm-order-btn{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #818cf8;
+    color: white;
+    font-family: 'Lato';
+    font-size: 1rem;
+    cursor: pointer;
+  }
