@@ -47,6 +47,7 @@ const blogPostSchema = new mongoose.Schema({
   heroImage: { type: String },
   category: { type: String, required: true },
   type: { type: String, required: true },
+  order: { type: Number, default: 0 },  // Add this field
 }, { timestamps: true });
 
 const BlogPost = mongoose.model('BlogPost', blogPostSchema);
@@ -165,6 +166,7 @@ app.get('/api/users', authenticateToken, async (req, res) => {
 
 app.post('/api/posts/reorder', authenticateToken, async (req, res) => {
   const { caseStudies } = req.body;
+
   try {
     for (let i = 0; i < caseStudies.length; i++) {
       await BlogPost.updateOne({ _id: caseStudies[i]._id }, { $set: { order: i } });
@@ -174,6 +176,7 @@ app.post('/api/posts/reorder', authenticateToken, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 app.delete('/api/posts/:id', authenticateToken, async (req, res) => {
   try {

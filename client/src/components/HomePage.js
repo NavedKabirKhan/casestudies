@@ -14,7 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/posts`);
+        const response = await axios.get(`${API_BASE_URL}/posts?sort=order`);
         setPosts(response.data);
         setLoading(false);
       } catch (error) {
@@ -22,9 +22,10 @@ const HomePage = () => {
         setLoading(false);
       }
     };
-
+  
     fetchPosts();
   }, []);
+  
 
   if (loading) return <div>Loading...</div>;
   if (posts.length === 0) return <div>No posts available</div>;
