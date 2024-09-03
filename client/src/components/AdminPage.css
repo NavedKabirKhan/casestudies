@@ -239,5 +239,6 @@
     color: white;
     font-family: 'Lato';
     font-size: 1rem;
+    margin-left: 50%;
     cursor: pointer;
   }
