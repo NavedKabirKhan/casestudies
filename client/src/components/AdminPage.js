@@ -220,18 +220,44 @@ const AdminPage = () => {
     const handleConfirmOrder = async () => {
       try {
         const token = localStorage.getItem("token");
-        await axios.post(`${API_BASE_URL}/posts/reorder`, {
-          caseStudies,
-        }, {
+    
+        // Step 1: Send the reordered case studies to the backend
+        await axios.post(
+          `${API_BASE_URL}/posts/reorder`,
+          {
+            caseStudies,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+    
+        // Step 2: Refetch the case studies from the backend to verify the order
+        const response = await axios.get(`${API_BASE_URL}/posts`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-  
+        const fetchedCaseStudies = response.data;
+    
+        // Step 3: Compare the fetched order with the current order
+        const isOrderChanged = fetchedCaseStudies.every(
+          (post, index) => post._id === caseStudies[index]._id
+        );
+    
+        // Step 4: Log the result of the comparison
+        if (isOrderChanged) {
+          console.log("Order change reflected on the homepage.");
+        } else {
+          console.log("Order change failed to reflect on the homepage.");
+        }
+    
+        // Step 5: Disable the confirmation button after saving the order
         alert("Order confirmed and saved successfully!");
-        setOrderChanged(false); // Disable the confirmation button
+        setOrderChanged(false);
       } catch (error) {
         console.error("Error saving reordered case studies:", error.message);
       }
     };
+    
   
 
   // Function to handle case study deletion with confirmation
